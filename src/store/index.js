@@ -29,10 +29,30 @@ export default new Vuex.Store({
     emptyCart(state, payload) {
       state.cart = []
     },
+    deleteProduct(state, payload) {
+        let index = state.cart.indexOf(payload);
+        state.cart.splice(index, 1);
+    },
+    updateQuantity(state, payload) {
+        // increase the quantity of the item in the cart
+        if (payload.quantity > 0) {
+            let item = state.cart.find(
+                (item) =>
+                    item._id === payload._id && item.size === payload.size
+            );
+            item.quantity = payload.quantity;
+        }
+    },
   },
   actions: {
     add_product_to_cart(context, payload) {
       context.commit('addToCart', payload)
+    },
+    delete_product(context, payload) {
+      context.commit("deleteProduct", payload);
+    },
+    update_quantity(context, payload) {
+      context.commit("updateQuantity", payload);
     },
   },
   getters: {

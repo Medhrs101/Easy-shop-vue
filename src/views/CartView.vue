@@ -20,21 +20,11 @@
               <tbody>
                 <tr v-for="(item, index) in cart" :key="index">
                   <td>
-                    <svg
-                      @click="deleteItem(index)"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-x-circle delete-btn"
-                      viewBox="0 0 16 16"
-                    >
+                    <svg @click="deleteProduct(index)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                      fill="currentColor" class="bi bi-x-circle delete-btn" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                       <path
-                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                      />
-                      <path
-                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-                      />
+                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
                   </td>
                   <td>
@@ -45,14 +35,8 @@
                     {{ item.price.toFixed(2) }}
                   </td>
                   <td>
-                    <input
-                      type="number"
-                      v-model="item.quantity"
-                      placeholder="QTY"
-                      min="1"
-                      max="10"
-                      @input="updateTotalPrice(item)"
-                    />
+                    <input type="number" v-model="item.quantity" placeholder="QTY" min="1" max="10"
+                      @input="updateTotalPrice(item)" />
                   </td>
                   <td>
                     {{ (item.quantity * item.price).toFixed(2) }}
@@ -75,10 +59,7 @@
                   </tr>
                 </tbody>
               </table>
-              <Button
-                :click="goToCheckoutPage"
-                btnvalue="Proceed to Checkout"
-              />
+              <Button :click="goToCheckoutPage" btnvalue="Proceed to Checkout" />
             </div>
           </div>
         </section>
@@ -101,7 +82,7 @@
 <script>
 import Button from '@/components/Button.vue'
 import Header from '@/components/Header.vue'
-import { mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import router from '@/router'
 import Footer from '@/components/Footer.vue'
 
@@ -113,6 +94,18 @@ export default {
     ...mapGetters(['subtotal']),
   },
   methods: {
+    ...mapActions(["delete_product", "update_quantity"]),
+
+    deleteProduct(index) {
+      this.delete_product(index);
+    },
+
+    updateTotalPrice(item) {
+      this.update_quantity(item);
+      this.cart.forEach((item) => {
+        this.total += item.quantity * item.price;
+      });
+    },
     goToCheckoutPage() {
       router.push('/Checkout')
     },
@@ -125,11 +118,13 @@ section {
   width: 100%;
   padding-block: 30px;
 }
+
 .container {
   width: 85%;
   margin-inline: auto;
   max-width: 1440px;
 }
+
 .no-cart {
   display: grid;
   place-items: center;
@@ -148,6 +143,7 @@ section {
 .cart-details {
   overflow-x: auto;
 }
+
 .img {
   height: 70px;
   width: 70px;
@@ -160,6 +156,7 @@ table {
   white-space: nowrap;
   width: 100%;
 }
+
 td {
   font-size: 1rem;
 }
@@ -217,6 +214,7 @@ td {
   border: 1px solid lightgrey;
   padding: 0.8rem;
 }
+
 /* 
 @media (max-width: 699px) {
   .cart-details table {

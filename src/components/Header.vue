@@ -23,6 +23,7 @@
               <span>{{ cart.length }}</span>
             </div>
           </router-link>
+          <router-link to="/SignIn">Login</router-link>
         </div>
       </nav>
     </div>

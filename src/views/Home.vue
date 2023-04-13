@@ -2,16 +2,16 @@
   <div>
     <Header></Header>
     <section>
-      <div class="container">
-        <section class="hero">
-          <div class="container">
-            <div class="hero-content">
-              <h1>Welcome to Easy-shop</h1>
-              <p>Get the best deals on your favorite products</p>
-              <Button :click="goToProductsPage" btnvalue="Shop now" />
-            </div>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1>Welcome to Easy-shop</h1>
+            <p>Get the best deals on your favorite products</p>
+            <Button :click="goToProductsPage" btnvalue="Shop now" />
           </div>
-        </section>
+        </div>
+      </section>
+      <div class="container">
         <section class="feature__section">
           <div class="container">
             <featured-products :featuredProducts="featuredProducts" />
@@ -60,21 +60,23 @@ export default {
 <style scoped>
 section {
   width: 100%;
-  /* padding-block: 30px; */
+  padding-block: 0px;
 }
-.container {
+/* .container {
   width: 85%;
   margin-inline: auto;
   max-width: 1440px;
-}
+} */
 .hero {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: calc(100vh - 3rem);
   background-image: url('@/assets/hero.webp');
   background-position: 70% 10%;
   background-size: cover;
+  max-width: 1400px;
+  margin-inline: auto;
 }
 
 .hero-content {
